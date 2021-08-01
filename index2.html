@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ja">
+  
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TODOアプリ</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+</head>
+
+<body>
+  <div id="app">
+    <h1>TODOアプリ</h1>
+    <div class="contens">
+      <p>タスク名：<input v-model="newTask" type="text"></p>
+      <p>推定時間（分）：<input v-model="newTime" type="text"></p>
+    </div>
+    <button @click="save()">追加</button>
+    <table>
+      <tr>
+        <th>タスク</th>
+        <th>推定時間（分）</th>
+      </tr>
+      <todo-compornent :todo-item='tasks'></todo-compornent>
+    </table>
+  </div>
+  <script>
+    Vue.compornent('todo-compornent',{
+      props:{
+        todoItem:{
+          type:Array
+        }
+      },
+      template: `
+        <tr v-for="task in tasks" :key="id">
+          <td>{{ task.item }}</td>
+          <td>{{ task.item2 }}</td>
+        </tr>
+      `,
+    })
+    new Vue({
+      el: '#app',
+      data() {
+        return {
+          newTask: '',
+          newTime: '',
+          tasks: [],
+        }
+      },
+      methods: {
+        save: function () {
+          const todo = {
+            item: this.newTask,
+            item2: this.newTime
+          }
+          this.tasks.push(todo);
+          // this.newTask = '';
+          // this.newTime = '';
+        }
+      }
+    })
+  </script>
+  <style>
+    .contens {
+      display: flex;
+    }
+  </style>
+</body>
+
+</html>
